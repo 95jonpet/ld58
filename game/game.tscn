@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://dc48ygt52ku8s"]
+[gd_scene load_steps=8 format=3 uid="uid://dc48ygt52ku8s"]
 
 [ext_resource type="Script" uid="uid://ft06gdgwealp" path="res://game/game.gd" id="1_l1rk1"]
 [ext_resource type="Script" uid="uid://b5wp1qk0b8nt7" path="res://game/camera.gd" id="2_h7iqs"]
 [ext_resource type="PackedScene" uid="uid://8etr0pvjg274" path="res://player/player.tscn" id="2_vasa2"]
 [ext_resource type="PackedScene" uid="uid://qek8mdtc0f3g" path="res://salvage/salvage.tscn" id="4_4fuuu"]
+[ext_resource type="Texture2D" uid="uid://bf7ybxjvbswjv" path="res://danger_indicator.png" id="4_u5opy"]
 [ext_resource type="Texture2D" uid="uid://d3gmynv1hpki0" path="res://salvage/salvage_indicator.png" id="5_dxrkv"]
+[ext_resource type="PackedScene" uid="uid://bekuobdt3djnq" path="res://missile/missile_platform.tscn" id="6_dakft"]
 
 [node name="Game" type="Node"]
 script = ExtResource("1_l1rk1")
@@ -30,9 +32,23 @@ color = Color(0, 0.03529412, 0.14117648, 1)
 [node name="SalvageIndicator" type="Sprite2D" parent="Camera"]
 texture = ExtResource("5_dxrkv")
 
+[node name="DangerIndicator" type="Sprite2D" parent="Camera"]
+texture = ExtResource("4_u5opy")
+
+[node name="Nebulae" type="Node" parent="."]
+
 [node name="Stars" type="Node" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("2_vasa2")]
 
 [node name="Salvage" parent="." instance=ExtResource("4_4fuuu")]
 position = Vector2(69, -35)
+
+[node name="MissilePlatform" parent="." instance=ExtResource("6_dakft")]
+position = Vector2(256, 256)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

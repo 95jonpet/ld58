@@ -13,13 +13,17 @@ const ACCELERATION: float = 1.0
 
 func _physics_process(delta: float) -> void:
 	# Update the player's movement.
-	rotation += Input.get_axis("ui_left", "ui_right") * delta * ROTATION_SPEED
+	rotation += Input.get_axis("rotate_counter_clockwise", "rotate_clockwise") * delta * ROTATION_SPEED
 	_set_engine_particle_state(false)
-	if Input.is_action_pressed("ui_up"):
+	if Input.is_action_pressed("accelerate"):
 		velocity += Vector2.from_angle(rotation) * ACCELERATION * delta
 		velocity = velocity.normalized() * min(velocity.length(), MAX_SPEED)
 		_set_engine_particle_state(true)
-	move_and_collide(velocity)
+
+	if move_and_collide(velocity):
+		print_debug("TODO: Handle collisions")
+		get_tree().reload_current_scene()
+	Globals.player_position = global_position
 
 func _set_engine_particle_state(emitting: bool) -> void:
 	for emitter in _engine_particles:

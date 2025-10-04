@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://47o6q5tsv48n"]
+
+[ext_resource type="Script" uid="uid://woqqivhv8tl4" path="res://missile/missile.gd" id="1_yplei"]
+[ext_resource type="Texture2D" uid="uid://cjuchafn3imr5" path="res://missile/missile.png" id="2_nhnjh"]
+[ext_resource type="Texture2D" uid="uid://bfw556g483o" path="res://environment/light.png" id="3_klu3d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nhnjh"]
+size = Vector2(12, 2)
+
+[node name="Missile" type="CharacterBody2D"]
+collision_layer = 0
+script = ExtResource("1_yplei")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_nhnjh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_nhnjh")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(0.8509804, 1, 0.8862745, 1)
+shadow_enabled = true
+texture = ExtResource("3_klu3d")
+texture_scale = 0.25
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 30.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
