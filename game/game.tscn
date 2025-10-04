@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://dc48ygt52ku8s"]
+
+[ext_resource type="Script" uid="uid://ft06gdgwealp" path="res://game/game.gd" id="1_l1rk1"]
+[ext_resource type="Script" uid="uid://b5wp1qk0b8nt7" path="res://game/camera.gd" id="2_h7iqs"]
+[ext_resource type="PackedScene" uid="uid://8etr0pvjg274" path="res://player/player.tscn" id="2_vasa2"]
+[ext_resource type="PackedScene" uid="uid://qek8mdtc0f3g" path="res://salvage/salvage.tscn" id="4_4fuuu"]
+[ext_resource type="Texture2D" uid="uid://d3gmynv1hpki0" path="res://salvage/salvage_indicator.png" id="5_dxrkv"]
+
+[node name="Game" type="Node"]
+script = ExtResource("1_l1rk1")
+
+[node name="Camera" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+script = ExtResource("2_h7iqs")
+
+[node name="Background" type="ColorRect" parent="Camera"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.03529412, 0.14117648, 1)
+
+[node name="SalvageIndicator" type="Sprite2D" parent="Camera"]
+texture = ExtResource("5_dxrkv")
+
+[node name="Stars" type="Node" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("2_vasa2")]
+
+[node name="Salvage" parent="." instance=ExtResource("4_4fuuu")]
+position = Vector2(69, -35)

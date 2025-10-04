@@ -1,0 +1,38 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="ld58"
+run/main_scene="uid://dt6ppitfyt5xk"
+config/features=PackedStringArray("4.5", "GL Compatibility")
+config/icon="res://settings/icon.svg"
+
+[autoload]
+
+AudioPlayer="*res://global/audio_player.gd"
+MusicPlayer="*res://global/music_player.gd"
+ScreenShake="*res://global/screen_shake.gd"
+Events="*res://global/events.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/resizable=false
+window/stretch/mode="canvas_items"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0, 0.03529412, 0.14117648, 1)
+environment/defaults/default_environment="uid://ber8rfm4hpcc7"

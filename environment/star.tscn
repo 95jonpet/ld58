@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://di16tw3x886ky"]
+
+[ext_resource type="Texture2D" uid="uid://c7t334l62w324" path="res://environment/star.png" id="1_0tmhu"]
+[ext_resource type="Script" uid="uid://ch0ctqho15nuo" path="res://environment/star.gd" id="1_8g0v8"]
+
+[node name="Star" type="Node2D"]
+script = ExtResource("1_8g0v8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_0tmhu")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

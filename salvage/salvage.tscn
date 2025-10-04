@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://qek8mdtc0f3g"]
+
+[ext_resource type="Texture2D" uid="uid://d0ef8d7rslvyr" path="res://salvage/salvage.png" id="1_1wd7m"]
+[ext_resource type="Script" uid="uid://cjcsbanxbbuc6" path="res://salvage/salvage.gd" id="1_fsvde"]
+[ext_resource type="Texture2D" uid="uid://bfw556g483o" path="res://environment/light.png" id="2_u2xpc"]
+[ext_resource type="PackedScene" uid="uid://cfna7o6hjnrrg" path="res://common/grapple_area.tscn" id="4_rfti0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u2xpc"]
+size = Vector2(12, 8)
+
+[sub_resource type="Gradient" id="Gradient_rfti0"]
+offsets = PackedFloat32Array(0, 0.25157234, 0.7610063, 1)
+colors = PackedColorArray(0.67058825, 1, 0.81960785, 0, 0.67058825, 1, 0.81960785, 1, 0.67058825, 1, 0.81960785, 1, 0.67058825, 1, 0.81960785, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7asg8"]
+gradient = SubResource("Gradient_rfti0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_w413h"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(4, 2, 1)
+inherit_velocity_ratio = 1.0
+spread = 5.0
+initial_velocity_min = 8.0
+initial_velocity_max = 8.0
+gravity = Vector3(0, 0, 0)
+scale_max = 2.0
+color = Color(0.67058825, 1, 0.81960785, 1)
+color_ramp = SubResource("GradientTexture1D_7asg8")
+
+[node name="Salvage" type="CharacterBody2D"]
+script = ExtResource("1_fsvde")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+light_mask = 0
+texture = ExtResource("1_1wd7m")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(0.8509804, 1, 0.8862745, 1)
+shadow_enabled = true
+texture = ExtResource("2_u2xpc")
+texture_scale = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_u2xpc")
+
+[node name="GrappleArea" parent="." instance=ExtResource("4_rfti0")]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="GrappleArea"]
+shape = SubResource("RectangleShape2D_u2xpc")
+
+[node name="GrappleParticles" type="GPUParticles2D" parent="."]
+light_mask = 0
+amount = 32
+lifetime = 4.0
+process_material = SubResource("ParticleProcessMaterial_w413h")
+
+[connection signal="apply_grapple" from="GrappleArea" to="." method="_on_grapple_area_apply_grapple"]
