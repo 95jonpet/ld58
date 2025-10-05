@@ -2,8 +2,8 @@ class_name Player
 extends CharacterBody2D
 
 const ROTATION_SPEED: float = 5.0
-const MAX_SPEED: float = 32.0
-const ACCELERATION: float = 1.0
+const MAX_SPEED: float = 192.0
+const ACCELERATION: float = 48.0
 const PLAYER_LASER_SPEED: float = 256.0
 const PLAYER_LASER_SCENE: PackedScene = preload("res://player/player_laser.tscn")
 const PLAYER_LASER_SHOOT: AudioStream = preload("res://player/player_laser_shoot.wav")
@@ -35,7 +35,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		_engine_sound.stop()
 
-	if move_and_collide(velocity):
+	if move_and_collide(velocity * delta):
 		print_debug("TODO: Handle collisions")
 		get_tree().reload_current_scene()
 	Globals.player_position = global_position

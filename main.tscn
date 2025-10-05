@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dt6ppitfyt5xk"]
+[gd_scene load_steps=8 format=3 uid="uid://dt6ppitfyt5xk"]
 
 [ext_resource type="Script" uid="uid://dckjsjrnmjt7f" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://dc48ygt52ku8s" path="res://game/game.tscn" id="1_ig7tw"]
 [ext_resource type="Shader" uid="uid://dwgwffnp6j1h4" path="res://main_viewport_shader.gdshader" id="2_h2yge"]
 [ext_resource type="Texture2D" uid="uid://bfw556g483o" path="res://environment/light.png" id="4_1bvp3"]
+[ext_resource type="FontFile" uid="uid://blpfvamsk5y6g" path="res://settings/kenney_blocks.ttf" id="5_lquwl"]
+[ext_resource type="FontFile" uid="uid://ucfop8hb1ksp" path="res://settings/kenney_mini_square.ttf" id="6_7mycd"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h2yge"]
 shader = ExtResource("2_h2yge")
@@ -42,3 +44,42 @@ texture = ExtResource("4_1bvp3")
 offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(0.1, 0.1)
+
+[node name="GameOver" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="GameOver"]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.015686275, 0.105882354, 0.21960784, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOver"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameOverLabel" type="Label" parent="GameOver/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.078431375, 0.3647059, 0.5294118, 1)
+theme_override_fonts/font = ExtResource("5_lquwl")
+theme_override_font_sizes/font_size = 96
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[node name="RestartLabel" type="Label" parent="GameOver/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.078431375, 0.3647059, 0.5294118, 1)
+theme_override_fonts/font = ExtResource("6_7mycd")
+theme_override_font_sizes/font_size = 48
+text = "Restart (R)"
+horizontal_alignment = 1

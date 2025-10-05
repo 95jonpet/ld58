@@ -2,10 +2,10 @@ class_name Game
 extends Node
 
 const GAME_SIZE: int = 2048
-const NEBULA_COUNT: int = 64
-const STAR_COUNT: int = 512
+const NEBULA_COUNT: int = 128
+const STAR_COUNT: int = 1024
 const INDICATOR_DISTANCE: int = 128
-const BORDER_SIZE: int = 1024
+const BORDER_SIZE: int = 2048
 const NEBULA: PackedScene = preload("res://environment/nebula.tscn")
 const STAR: PackedScene = preload("res://environment/star.tscn")
 const SALVAGE_SCENE: PackedScene = preload("res://salvage/salvage.tscn")
@@ -91,13 +91,13 @@ func _generate_missile_plattform() -> void:
 	var side: String = ["north", "south", "east", "west"].pick_random() as String
 	match side:
 		"north":
-			missile_platform.position = Vector2(randi_range(0, GAME_SIZE), 0)
+			missile_platform.position = Vector2(randi_range(0, GAME_SIZE), -BORDER_SIZE / 2.0)
 		"south":
-			missile_platform.position = Vector2(randi_range(0, GAME_SIZE), GAME_SIZE)
+			missile_platform.position = Vector2(randi_range(0, GAME_SIZE), GAME_SIZE + BORDER_SIZE / 2.0)
 		"east":
-			missile_platform.position = Vector2(GAME_SIZE, randi_range(0, GAME_SIZE))
+			missile_platform.position = Vector2(GAME_SIZE + BORDER_SIZE / 2.0, randi_range(0, GAME_SIZE))
 		"west":
-			missile_platform.position = Vector2(0, randi_range(0, GAME_SIZE))
+			missile_platform.position = Vector2(-BORDER_SIZE / 2.0, randi_range(0, GAME_SIZE))
 
 func _generate_salvage() -> void:
 	salvage.queue_free()
