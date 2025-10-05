@@ -129,5 +129,6 @@ func _on_timer_timeout() -> void:
 	_generate_missile_plattform()
 
 func _on_out_of_area_timer_timeout() -> void:
+	Globals.player_health -= 1
 	AudioPlayer.play(PLAYER_HURT)
 	ScreenShake.apply_shake(25)

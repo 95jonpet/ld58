@@ -7,6 +7,7 @@ func _physics_process(delta: float) -> void:
 	if move_and_collide(velocity * delta):
 		AudioPlayer.play(MISSILE_HIT)
 		ScreenShake.apply_shake(8)
+		Globals.player_health -= 1
 		queue_free()
 
 

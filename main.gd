@@ -2,9 +2,28 @@ class_name Main
 extends Node
 
 @onready var _viewport_container: SubViewportContainer = $SubViewportContainer
+@onready var _health_indicator_template: TextureRect = $HealthIndicatorTemplate
+@onready var _health_indicator_container: HBoxContainer = $HealthIndicatorContainer
+var _health_indicators: Array[TextureRect] = []
 
+
+func _ready() -> void:
+	for _i in range(Globals.PLAYER_MAX_HEALTH):
+		var health_indicator: TextureRect = _health_indicator_template.duplicate()
+		health_indicator.visible = true
+		_health_indicator_container.add_child(health_indicator)
+		_health_indicators.push_back(health_indicator)
+
+	Events.player_health_changed.connect(_on_player_health_changed)
 
 func _on_camera_moved(camera: Camera, _old_pos: Vector2, new_pos: Vector2) -> void:
 	var subpixel_position: Vector2 = new_pos.round() - new_pos
 	camera.global_position = new_pos.round()
 	_viewport_container.material.set_shader_parameter("camera_offset", subpixel_position)
+
+func _on_player_health_changed(new_health: int, _old_health: int) -> void:
+	for i in range(0, _health_indicators.size()):
+		_health_indicators[i].modulate.a = 1.0 if i + 1 <= new_health else 0.25
+
+	if new_health <= 0:
+		print_debug("TODO: Game over")

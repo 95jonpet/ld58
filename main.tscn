@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dt6ppitfyt5xk"]
+[gd_scene load_steps=6 format=3 uid="uid://dt6ppitfyt5xk"]
 
 [ext_resource type="Script" uid="uid://dckjsjrnmjt7f" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://dc48ygt52ku8s" path="res://game/game.tscn" id="1_ig7tw"]
 [ext_resource type="Shader" uid="uid://dwgwffnp6j1h4" path="res://main_viewport_shader.gdshader" id="2_h2yge"]
+[ext_resource type="Texture2D" uid="uid://bfw556g483o" path="res://environment/light.png" id="4_1bvp3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h2yge"]
 shader = ExtResource("2_h2yge")
@@ -29,3 +30,15 @@ size = Vector2i(640, 360)
 render_target_update_mode = 4
 
 [node name="Game" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_ig7tw")]
+
+[node name="HealthIndicatorTemplate" type="TextureRect" parent="."]
+visible = false
+modulate = Color(0.8509804, 1, 0.8862745, 1)
+offset_right = 512.0
+offset_bottom = 512.0
+texture = ExtResource("4_1bvp3")
+
+[node name="HealthIndicatorContainer" type="HBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(0.1, 0.1)
