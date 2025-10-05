@@ -42,3 +42,17 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Grappler"]
 shape = SubResource("CircleShape2D_yw30f")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="LaserEmitters" type="Node2D" parent="."]
+
+[node name="Marker2D" type="Marker2D" parent="LaserEmitters"]
+position = Vector2(5, -5)
+
+[node name="Marker2D2" type="Marker2D" parent="LaserEmitters"]
+position = Vector2(5, 5)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
