@@ -18,3 +18,14 @@ func _process(delta: float) -> void:
 	global_position = current_position
 	if global_position != old_position:
 		Events.camera_moved.emit(self, old_position, global_position)
+
+
+func snap_to_position(snap_position: Vector2) -> void:
+	position_smoothing_enabled = false
+
+	position = snap_position
+	current_position = snap_position
+	target_position = snap_position
+
+	await get_tree().create_timer(0.1).timeout
+	position_smoothing_enabled = true

@@ -12,4 +12,5 @@ func _generate_missile() -> void:
 	add_sibling(missile)
 	missile.position = position
 	missile.rotation = global_position.direction_to(Globals.player_position).angle()
+	missile.rotation += randf_range(-deg_to_rad(2), deg_to_rad(2))
 	missile.velocity = Vector2.from_angle(missile.rotation) * MISSILE_SPEED
