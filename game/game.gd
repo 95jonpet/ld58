@@ -30,6 +30,8 @@ const ENEMY_SHIP_SCENE: PackedScene  = preload("res://enemy/enemy_ship.tscn")
 
 
 func _ready() -> void:
+	Globals.reset_session()
+
 	_generate_nebulae()
 	_generate_stars()
 	_generate_salvage()

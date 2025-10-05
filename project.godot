@@ -10,10 +10,11 @@ config_version=5
 
 [application]
 
-config/name="ld58"
+config/name="Stellar Salvage"
+config/description="Made in 48 hours for Ludum Dare 58 by Peter Jonsson."
 run/main_scene="uid://dt6ppitfyt5xk"
 config/features=PackedStringArray("4.5", "GL Compatibility")
-config/icon="res://settings/icon.svg"
+config/icon="uid://4uc7u5qxpand"
 
 [audio]
 

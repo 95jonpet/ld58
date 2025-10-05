@@ -13,3 +13,7 @@ var salvage_count: int = 0:
 	set(value):
 		Events.salvage_collected.emit(value)
 		salvage_count = value
+
+func reset_session() -> void:
+	player_health = PLAYER_MAX_HEALTH
+	salvage_count = 0
