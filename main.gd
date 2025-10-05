@@ -48,7 +48,4 @@ func _on_game_over() -> void:
 	_game.set_deferred("process_mode", Node.PROCESS_MODE_DISABLED)
 
 	# Show game over screen.
-	await get_tree().create_timer(0.1).timeout
 	await get_tree().create_tween().tween_property(_game_over, "modulate", Color.WHITE, 0.25).finished
-	await get_tree().create_timer(1.0).timeout
-	await get_tree().create_tween().tween_property(_game_over, "modulate", Color.TRANSPARENT, 0.25).finished
