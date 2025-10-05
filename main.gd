@@ -6,6 +6,7 @@ extends Node
 @onready var _health_indicator_container: HBoxContainer = $HealthIndicatorContainer
 @onready var _game_over: Control = $GameOver
 @onready var _game: Game = $SubViewportContainer/SubViewport/Game
+@onready var _salvage_label: Label = $SalvageLabel
 var _health_indicators: Array[TextureRect] = []
 const MUSIC_1 = preload("res://game/music1.wav")
 
@@ -19,9 +20,14 @@ func _ready() -> void:
 		_health_indicator_container.add_child(health_indicator)
 		_health_indicators.push_back(health_indicator)
 
+	Events.salvage_collected.connect(_on_salvage_collected)
 	Events.player_health_changed.connect(_on_player_health_changed)
 	Events.game_over.connect(_on_game_over)
 	_game_over.modulate = Color.TRANSPARENT
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("restart"):
+		get_tree().reload_current_scene()
 
 func _on_camera_moved(camera: Camera, _old_pos: Vector2, new_pos: Vector2) -> void:
 	var subpixel_position: Vector2 = new_pos.round() - new_pos
@@ -34,6 +40,9 @@ func _on_player_health_changed(new_health: int, _old_health: int) -> void:
 
 	if new_health <= 0:
 		Events.game_over.emit()
+
+func _on_salvage_collected(salvage_count: int) -> void:
+	_salvage_label.text = "Salvage: " + str(salvage_count)
 
 func _on_game_over() -> void:
 	_game.process_mode = Node.PROCESS_MODE_DISABLED

@@ -14,6 +14,7 @@ func _process(_delta: float) -> void:
 	if move_and_slide():
 		velocity = Vector2.ZERO
 	if health <= 0:
+		Globals.salvage_count += 1
 		salvage_collected.emit()
 
 func _on_grapple_area_apply_grapple(grappler: Area2D, delta: float) -> void:
