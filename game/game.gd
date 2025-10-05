@@ -10,6 +10,7 @@ const NEBULA: PackedScene = preload("res://environment/nebula.tscn")
 const STAR: PackedScene = preload("res://environment/star.tscn")
 const SALVAGE_SCENE: PackedScene = preload("res://salvage/salvage.tscn")
 const PLAYER_HURT: AudioStream = preload("res://player/player_hurt.wav")
+const ENEMY_SHIP_SCENE: PackedScene  = preload("res://enemy/enemy_ship.tscn")
 
 @onready var background: ColorRect = $Background
 @onready var north_border: ColorRect = $Borders/NorthBorder
@@ -24,7 +25,7 @@ const PLAYER_HURT: AudioStream = preload("res://player/player_hurt.wav")
 @onready var salvage: Salvage = $Salvage
 @onready var salvage_indicator: Sprite2D = $Camera/SalvageIndicator
 @onready var danger_indicator: Sprite2D = $Camera/DangerIndicator
-@onready var missile_platform: MissilePlatform = $MissilePlatform
+@onready var enemy_spawner: Marker2D = $EnemySpawner
 @onready var out_of_area_timer: Timer = $OutOfAreaTimer
 
 
@@ -32,7 +33,7 @@ func _ready() -> void:
 	_generate_nebulae()
 	_generate_stars()
 	_generate_salvage()
-	_generate_missile_plattform()
+	_spawn_enemy()
 
 	background.position = Vector2(-BORDER_SIZE, -BORDER_SIZE)
 	background.size = Vector2(GAME_SIZE + BORDER_SIZE * 2, GAME_SIZE + BORDER_SIZE * 2)
@@ -54,7 +55,7 @@ func _process(delta: float) -> void:
 	camera.offset = ScreenShake.get_noise_offset(delta)
 
 	_update_indicator(salvage_indicator, salvage.global_position)
-	_update_indicator(danger_indicator, missile_platform.global_position)
+	_update_indicator(danger_indicator, enemy_spawner.global_position)
 
 	var game_area := Rect2(0, 0, GAME_SIZE, GAME_SIZE)
 	var player_in_game_area := game_area.has_point(player.position)
@@ -87,18 +88,6 @@ func _update_indicator(indicator: Sprite2D, target_position: Vector2) -> void:
 	else:
 		indicator.show()
 
-func _generate_missile_plattform() -> void:
-	var side: String = ["north", "south", "east", "west"].pick_random() as String
-	match side:
-		"north":
-			missile_platform.position = Vector2(randi_range(0, GAME_SIZE), -BORDER_SIZE / 2.0)
-		"south":
-			missile_platform.position = Vector2(randi_range(0, GAME_SIZE), GAME_SIZE + BORDER_SIZE / 2.0)
-		"east":
-			missile_platform.position = Vector2(GAME_SIZE + BORDER_SIZE / 2.0, randi_range(0, GAME_SIZE))
-		"west":
-			missile_platform.position = Vector2(-BORDER_SIZE / 2.0, randi_range(0, GAME_SIZE))
-
 func _generate_salvage() -> void:
 	salvage.queue_free()
 
@@ -125,10 +114,30 @@ func _generate_stars() -> void:
 		)
 		stars.add_child(star)
 
-func _on_timer_timeout() -> void:
-	_generate_missile_plattform()
+func _spawn_enemy() -> void:
+	var enemy = ENEMY_SHIP_SCENE.instantiate()
+	enemy.position = _random_border_position()
+	add_child(enemy)
+
+func _random_border_position() -> Vector2:
+	match ["north", "south", "east", "west"].pick_random():
+		"north":
+			return Vector2(randi_range(0, GAME_SIZE), -BORDER_SIZE / 2.0)
+		"south":
+			return Vector2(randi_range(0, GAME_SIZE), GAME_SIZE + BORDER_SIZE / 2.0)
+		"east":
+			return Vector2(GAME_SIZE + BORDER_SIZE / 2.0, randi_range(0, GAME_SIZE))
+		"west":
+			return Vector2(-BORDER_SIZE / 2.0, randi_range(0, GAME_SIZE))
+	return Vector2.ZERO
 
 func _on_out_of_area_timer_timeout() -> void:
 	Globals.player_health -= 1
 	AudioPlayer.play(PLAYER_HURT)
 	ScreenShake.apply_shake(25)
+
+func _on_enemy_spawn_timer_timeout() -> void:
+	_spawn_enemy()
+
+func _on_enemy_spawn_move_timer_timeout() -> void:
+	enemy_spawner.global_position = _random_border_position()

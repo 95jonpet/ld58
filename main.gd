@@ -45,7 +45,7 @@ func _on_salvage_collected(salvage_count: int) -> void:
 	_salvage_label.text = "Salvage: " + str(salvage_count)
 
 func _on_game_over() -> void:
-	_game.process_mode = Node.PROCESS_MODE_DISABLED
+	_game.set_deferred("process_mode", Node.PROCESS_MODE_DISABLED)
 
 	# Show game over screen.
 	await get_tree().create_timer(0.1).timeout

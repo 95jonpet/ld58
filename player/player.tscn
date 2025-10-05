@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://8etr0pvjg274"]
+[gd_scene load_steps=9 format=3 uid="uid://8etr0pvjg274"]
 
 [ext_resource type="Texture2D" uid="uid://chpdw03oajjxp" path="res://player/player.png" id="1_oul6g"]
 [ext_resource type="Script" uid="uid://b1qb3tsvq6sm8" path="res://player/player.gd" id="1_rkbax"]
@@ -11,6 +11,8 @@ size = Vector2(14, 12)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yw30f"]
 radius = 72.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qjkh3"]
 
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 0
@@ -60,4 +62,12 @@ position = Vector2(5, -5)
 [node name="Marker2D2" type="Marker2D" parent="LaserEmitters"]
 position = Vector2(5, 5)
 
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_qjkh3")
+
 [connection signal="timeout" from="LaserTimer" to="." method="_on_laser_timer_timeout"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

@@ -15,6 +15,7 @@ func _process(_delta: float) -> void:
 		velocity = Vector2.ZERO
 	if health <= 0:
 		Globals.salvage_count += 1
+		Globals.player_health += 1
 		salvage_collected.emit()
 
 func _on_grapple_area_apply_grapple(grappler: Area2D, delta: float) -> void:

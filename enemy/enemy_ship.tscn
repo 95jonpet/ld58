@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://tg3noqgmg4f1"]
+
+[ext_resource type="Texture2D" uid="uid://dfkw7spvtavs5" path="res://enemy/enemy_ship.png" id="1_fjbek"]
+[ext_resource type="Script" uid="uid://ceishiioo1bx5" path="res://enemy/enemy_ship.gd" id="1_t1usc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fjbek"]
+size = Vector2(14, 7)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t1usc"]
+radius = 8.0
+
+[node name="EnemyShip" type="CharacterBody2D"]
+script = ExtResource("1_t1usc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_fjbek")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_fjbek")
+
+[node name="NavigationTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="MissileTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_t1usc")
+
+[connection signal="timeout" from="NavigationTimer" to="." method="_on_navigation_timer_timeout"]
+[connection signal="timeout" from="MissileTimer" to="." method="_on_missile_timer_timeout"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

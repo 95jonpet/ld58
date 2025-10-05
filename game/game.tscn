@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dc48ygt52ku8s"]
+[gd_scene load_steps=7 format=3 uid="uid://dc48ygt52ku8s"]
 
 [ext_resource type="Script" uid="uid://ft06gdgwealp" path="res://game/game.gd" id="1_l1rk1"]
 [ext_resource type="Script" uid="uid://b5wp1qk0b8nt7" path="res://game/camera.gd" id="2_h7iqs"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://qek8mdtc0f3g" path="res://salvage/salvage.tscn" id="4_4fuuu"]
 [ext_resource type="Texture2D" uid="uid://bf7ybxjvbswjv" path="res://danger_indicator.png" id="4_u5opy"]
 [ext_resource type="Texture2D" uid="uid://d3gmynv1hpki0" path="res://salvage/salvage_indicator.png" id="5_dxrkv"]
-[ext_resource type="PackedScene" uid="uid://bekuobdt3djnq" path="res://missile/missile_platform.tscn" id="6_dakft"]
 
 [node name="Game" type="Node"]
 script = ExtResource("1_l1rk1")
@@ -57,14 +56,18 @@ texture = ExtResource("4_u5opy")
 [node name="Salvage" parent="." instance=ExtResource("4_4fuuu")]
 position = Vector2(69, -35)
 
-[node name="MissilePlatform" parent="." instance=ExtResource("6_dakft")]
-position = Vector2(256, 256)
+[node name="EnemySpawner" type="Marker2D" parent="."]
 
-[node name="Timer" type="Timer" parent="."]
+[node name="EnemySpawnTimer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[node name="EnemySpawnMoveTimer" type="Timer" parent="."]
 wait_time = 10.0
 autostart = true
 
 [node name="OutOfAreaTimer" type="Timer" parent="."]
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
+[connection signal="timeout" from="EnemySpawnMoveTimer" to="." method="_on_enemy_spawn_move_timer_timeout"]
 [connection signal="timeout" from="OutOfAreaTimer" to="." method="_on_out_of_area_timer_timeout"]

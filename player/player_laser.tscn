@@ -5,10 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://bfw556g483o" path="res://environment/light.png" id="3_m01m7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hr547"]
-size = Vector2(6, 2)
+size = Vector2(8, 4)
 
 [node name="PlayerLaser" type="CharacterBody2D"]
-collision_layer = 0
+collision_layer = 4
 collision_mask = 4
 script = ExtResource("1_8rpwx")
 

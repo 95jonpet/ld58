@@ -7,6 +7,7 @@ const ACCELERATION: float = 48.0
 const PLAYER_LASER_SPEED: float = 256.0
 const PLAYER_LASER_SCENE: PackedScene = preload("res://player/player_laser.tscn")
 const PLAYER_LASER_SHOOT: AudioStream = preload("res://player/player_laser_shoot.wav")
+const PLAYER_HURT: AudioStream = preload("res://player/player_hurt.wav")
 
 var _laser_ready: bool = true
 @onready var _laser_timer: Timer = $LaserTimer
@@ -64,3 +65,9 @@ func _shoot_laser(emitter: Marker2D) -> void:
 	laser.global_position = emitter.global_position
 	laser.rotation = rotation
 	laser.velocity = velocity + Vector2.from_angle(laser.rotation) * PLAYER_LASER_SPEED
+
+func _on_hitbox_body_entered(body: Node2D) -> void:
+	body.queue_free()
+	AudioPlayer.play(PLAYER_HURT)
+	ScreenShake.apply_shake(8)
+	Globals.player_health -= 1
